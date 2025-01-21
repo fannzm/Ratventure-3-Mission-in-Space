@@ -73,8 +73,8 @@ public class MeteoriteSpawner : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var playerController = other.GetComponent<PlayerLife>();
-            playerController.TakeDamage(Damage);
-            Destroy(gameObject);
+            playerController.TakeDamage(Damage, "Meteorite"); // Quelle angeben
+            Destroy(gameObject); // Meteorit zerstören
         }
     }
 

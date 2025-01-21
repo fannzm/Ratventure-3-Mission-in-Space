@@ -33,12 +33,6 @@ public class EnemieManager : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            var playerController = other.GetComponent<PlayerLife>();
-            playerController.TakeDamage(Damage);
-        }
-    }
+
+
 }
