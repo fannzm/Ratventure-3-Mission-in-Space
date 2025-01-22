@@ -11,6 +11,8 @@ public class EnemyAttack : MonoBehaviour
     public GameObject projectilePrefab; // Projektil, das der Feind abfeuert
     public Transform firePoint; // Ort, von dem aus das Projektil abgefeuert wird
     public float attackCooldown = 2f; // Zeit zwischen Angriffen
+    public float projectileSpeed = 5f; // Geschwindigkeit des Projektils
+    public int damage = 2; // Schaden, den das Projektil verursacht
 
     private float lastAttackTime = 0f;
 
@@ -31,7 +33,6 @@ public class EnemyAttack : MonoBehaviour
 
     void Attack()
     {
-
         // Angriffsanimation abspielen
         if (animator != null)
         {
@@ -41,11 +42,19 @@ public class EnemyAttack : MonoBehaviour
         // Projektil abfeuern
         if (projectilePrefab != null && firePoint != null)
         {
-            Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+            // Erstelle das Projektil und initialisiere es
+            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+            // Initialisiere das Projektil mit dem Spieler als Ziel
+            EnemyProjectiles enemyProjectile = projectile.GetComponent<EnemyProjectiles>();
+            if (enemyProjectile != null)
+            {
+                // Zielposition ist die des Spielers, Geschwindigkeit und Schaden werden ebenfalls gesetzt
+                enemyProjectile.Initialize(player.position, projectileSpeed, damage);
+            }
         }
 
         // Cooldown aktualisieren
         lastAttackTime = Time.time;
     }
 }
-
