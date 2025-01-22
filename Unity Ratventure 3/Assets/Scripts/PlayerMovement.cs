@@ -48,8 +48,8 @@ public class PlayerMovement : MonoBehaviour
         playerTransform.position = new Vector3(newPosX, playerTransform.position.y, playerTransform.position.z);
 
         // Verschiebe die Rückwärtsgrenze basierend auf dem Fortschritt des Spielers
-        // Beispiel: Verschiebe minX alle 10 Einheiten des Fortschritts
-        if (newPosX > minX + 15f) // Wenn der Spieler mehr als 10 Einheiten vorwärts geht
+        // Beispiel: Verschiebe minX alle 15 Einheiten des Fortschritts
+        if (newPosX > minX + 15f) // Wenn der Spieler mehr als 15 Einheiten vorwärts geht
         {
             UpdateMinX(newPosX);
         }
