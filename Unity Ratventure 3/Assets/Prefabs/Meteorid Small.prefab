@@ -194,12 +194,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 0}
-  Player: {fileID: 0}
-  MeteoritePrefabs: []
+  player: {fileID: 0}
+  MeteoritePrefabs:
+  - {fileID: 6732073378607832559, guid: 2ba8353f6fdb14145ae259a0b0c96d63, type: 3}
+  - {fileID: 3809711877798234534, guid: b6142bc6ff23dbd46bb4aa92139ab3e7, type: 3}
+  - {fileID: 7582002152194188792}
   SpawnRateMin: 0.5
-  SpawnRateMax: 3
-  MeteoriteSpeedMin: 3
-  MeteoriteSpeedMax: 6
+  SpawnRateMax: 7
+  MeteoriteSpeedMin: 2
+  MeteoriteSpeedMax: 4
   RotationSpeedMin: -30
   RotationSpeedMax: 30
   Damage: 1

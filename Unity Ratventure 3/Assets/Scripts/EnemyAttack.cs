@@ -1,11 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    public Transform player; // Referenz auf den Spieler
+    private Transform player; // Referenz auf den Spieler, nun dynamisch über den Tag
     public float attackRange = 2f; // Entfernung, bei der der Feind angreifen soll
     public Animator animator; // Animator-Komponente für die Animation
     public GameObject projectilePrefab; // Projektil, das der Feind abfeuert
@@ -15,6 +14,11 @@ public class EnemyAttack : MonoBehaviour
     public int damage = 2; // Schaden, den das Projektil verursacht
 
     private float lastAttackTime = 0f;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform; // Finde den Player über Tag
+    }
 
     void Update()
     {
@@ -52,6 +56,12 @@ public class EnemyAttack : MonoBehaviour
                 // Zielposition ist die des Spielers, Geschwindigkeit und Schaden werden ebenfalls gesetzt
                 enemyProjectile.Initialize(player.position, projectileSpeed, damage);
             }
+
+            if (enemyProjectile.projectileAnimator != null)
+            {
+                enemyProjectile.projectileAnimator.SetTrigger("Shoot"); // Setzt den Trigger für die Projektil-Animation
+            }
+
         }
 
         // Cooldown aktualisieren

@@ -9,6 +9,8 @@ public class EnemyProjectiles : MonoBehaviour
     private int damage; // Schaden, den das Projektil verursacht
     private Rigidbody2D rb; // Rigidbody für Bewegung (falls 2D)
 
+    public Animator projectileAnimator; // Animator für das Projektil, um seine Animation zu steuern
+
     public void Initialize(Vector2 targetPosition, float projectileSpeed, int damage)
     {
         // Berechne Richtung zum Ziel (Spieler)
@@ -24,6 +26,11 @@ public class EnemyProjectiles : MonoBehaviour
         if (rb != null)
         {
             rb.velocity = direction * speed; // Setzt die Bewegung des Projektils
+        }
+
+        if (projectileAnimator != null)
+        {
+            projectileAnimator.SetTrigger("Shoot"); // Animation starten
         }
     }
 

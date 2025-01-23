@@ -6,7 +6,7 @@ using UnityEngine;
 public class MeteoriteSpawner : MonoBehaviour
 {
     public Camera Camera; // Referenz zur Kamera
-    public GameObject Player; // Referenz zum Spieler
+    public Transform player; // Referenz zum Spieler
     public GameObject[] MeteoritePrefabs; // Array von Meteoriten-Prefabs
 
     public float SpawnRateMin = 0.5f; // Minimale Spawn-Rate
@@ -24,16 +24,20 @@ public class MeteoriteSpawner : MonoBehaviour
     private float difficultyFactor = 2f; // Skaliert dynamisch mit der Zeit
 
     public int Damage = 1;
-   
-
-    private void DetermineNextSpawnTime()
-    {
-        // Setzt die nächste Spawnzeit zufällig zwischen Min und Max
-        _nextSpawnTime = Time.time + UnityEngine.Random.Range(SpawnRateMin, SpawnRateMax);
-    }
 
     private void Start()
     {
+        // Stelle sicher, dass die Kamera und der Spieler korrekt zugewiesen sind
+        if (Camera == null)
+        {
+            Camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>(); // Finde die Hauptkamera // Falls die Kamera nicht im Inspector gesetzt wurde, verwende die Hauptkamera
+        }
+
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform; // Finde den Player über Tag
+        }
+
         DetermineNextSpawnTime();
     }
 
@@ -55,6 +59,12 @@ public class MeteoriteSpawner : MonoBehaviour
         SpawnRateMax = Mathf.Clamp(3f / difficultyFactor, 1f, 5f);
     }
 
+    private void DetermineNextSpawnTime()
+    {
+        // Setzt die nächste Spawnzeit zufällig zwischen Min und Max
+        _nextSpawnTime = Time.time + UnityEngine.Random.Range(SpawnRateMin, SpawnRateMax);
+    }
+
     private void Update()
     {
         elapsedTime += Time.deltaTime; // Zeit hochzählen
@@ -64,30 +74,14 @@ public class MeteoriteSpawner : MonoBehaviour
         if (Time.time >= _nextSpawnTime)
         {
             SpawnMeteorite();
-            DetermineNextSpawnTime();
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            var playerController = other.GetComponent<PlayerLife>();
-            playerController.TakeDamage(Damage, "Meteorite"); // Quelle angeben
-            Destroy(gameObject); // Meteorit zerstören
+            DetermineNextSpawnTime(); // Berechne die nächste Spawnzeit
         }
     }
 
     private void SpawnMeteorite()
     {
         // Debug-Log für die Array-Länge und Prüfung auf leere Prefabs
-        UnityEngine.Debug.Log("MeteoritePrefabs Length: " + MeteoritePrefabs.Length); // Ausgabe der Array-Länge
-
-        if (MeteoritePrefabs.Length == 0)
-        {
-            UnityEngine.Debug.LogError("Keine Meteoriten-Prefabs im Array vorhanden!");
-            return;
-        }
+        Debug.Log("MeteoritePrefabs Length: " + MeteoritePrefabs.Length); // Ausgabe der Array-Länge
 
         // Zufälliges Prefab aus dem Array auswählen
         int prefabIndexToSpawn = UnityEngine.Random.Range(0, MeteoritePrefabs.Length); // Ändere zu UnityEngine.Random.Range
@@ -97,13 +91,13 @@ public class MeteoriteSpawner : MonoBehaviour
         GameObject meteorite = Instantiate(prefabToSpawn);
 
         // X-Position: Spawnt rechts außerhalb des sichtbaren Bereichs der Kamera
-        float xPosition = Player.transform.position.x + Camera.orthographicSize * Camera.aspect + 6f;
+        float xPosition = player.position.x + Camera.orthographicSize * Camera.aspect + 6f;
 
         // Y-Position: Zufällig innerhalb des vertikalen sichtbaren Bereichs der Kamera
         float yPosition = UnityEngine.Random.Range(Camera.transform.position.y - Camera.orthographicSize, Camera.transform.position.y + Camera.orthographicSize);
 
         // Meteoriten an der berechneten Position platzieren
-        meteorite.transform.position = new UnityEngine.Vector3(xPosition, yPosition, 0); // Hier explizit UnityEngine.Vector3 verwenden
+        meteorite.transform.position = new Vector3(xPosition, yPosition, 0);
 
         // Geschwindigkeit zufällig einstellen
         float speed = UnityEngine.Random.Range(MeteoriteSpeedMin, MeteoriteSpeedMax);
@@ -117,13 +111,21 @@ public class MeteoriteSpawner : MonoBehaviour
 
         // Leichte Rotation hinzufügen
         float rotationSpeed = UnityEngine.Random.Range(RotationSpeedMin, RotationSpeedMax);
-        Rigidbody2D meteoriteRb = meteorite.GetComponent<Rigidbody2D>();
-        if (meteoriteRb != null)
+        if (meteorite.GetComponent<Rigidbody2D>() != null)
         {
-            meteoriteRb.angularVelocity = rotationSpeed; // Rotationsgeschwindigkeit
+            meteorite.GetComponent<Rigidbody2D>().angularVelocity = rotationSpeed; // Rotationsgeschwindigkeit
         }
 
         Destroy(meteorite, 10f); // Meteorite wird nach 10 Sekunden zerstört
-        
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            var playerController = other.GetComponent<PlayerLife>();
+            playerController.TakeDamage(Damage, "Meteorite"); // Quelle angeben
+            Destroy(gameObject); // Meteorit zerstören
+        }
     }
 }
