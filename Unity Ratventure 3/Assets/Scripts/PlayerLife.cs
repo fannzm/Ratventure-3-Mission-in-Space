@@ -62,9 +62,9 @@ public class PlayerLife : MonoBehaviour
         {
             anim.SetTrigger("Death");
         }
-
+        SceneManager.LoadScene(2);
         // Szene nach kurzer Verzögerung neu laden
-        Invoke(nameof(ReloadScene), 0.5f); // 2 Sekunden Verzögerung
+        //Invoke(nameof(ReloadScene), 0.5f); // 2 Sekunden Verzögerung
     }
 
     private void ReloadScene()

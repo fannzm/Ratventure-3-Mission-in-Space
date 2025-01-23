@@ -35,7 +35,6 @@ public class PlayerNameInput : MonoBehaviour
         // Spiel starten (z. B. neue Szene laden)
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);// Ersetze "GameScene" mit dem Namen deiner Spielszene
     }
-    
-    
+  
 
 }

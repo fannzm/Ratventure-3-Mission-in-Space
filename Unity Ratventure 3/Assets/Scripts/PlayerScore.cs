@@ -8,6 +8,7 @@ public class PlayerScore : MonoBehaviour
     private float distanceTraveled = 0f;  // Zurückgelegte Distanz des Spielers
     private float lastPositionX;          // Letzte X-Position des Spielers
     private MainMenu mainMenu;            // Referenz auf das MainMenu-Script, um den Score zu aktualisieren
+    private int currentScore = 0;         // Aktueller Score
 
     void Start()
     {
@@ -28,14 +29,20 @@ public class PlayerScore : MonoBehaviour
         if (distanceTraveled >= distanceThreshold)
         {
             // Score erhöhen
+            currentScore += 10; // Erhöhe den Score um 10 Punkte, du kannst dies anpassen
             if (mainMenu != null)
             {
-                mainMenu.UpdateScore(10); // Erhöhe den Score um 10 Punkte, du kannst dies anpassen
+                mainMenu.UpdateScore(currentScore);
             }
+
+            // Score speichern
+            string playerName = PlayerPrefs.GetString("PlayerName", "Unknown");
+            PlayerPrefs.SetInt("Score_" + playerName, currentScore);
 
             // Zurücksetzen der zurückgelegten Strecke
             distanceTraveled = 0f;
         }
     }
 }
+
 
