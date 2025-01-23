@@ -24,6 +24,7 @@ public class MeteoriteSpawner : MonoBehaviour
     private float difficultyFactor = 2f; // Skaliert dynamisch mit der Zeit
 
     public int Damage = 1;
+   
 
     private void DetermineNextSpawnTime()
     {
@@ -123,5 +124,6 @@ public class MeteoriteSpawner : MonoBehaviour
         }
 
         Destroy(meteorite, 10f); // Meteorite wird nach 10 Sekunden zerstört
+        
     }
 }
