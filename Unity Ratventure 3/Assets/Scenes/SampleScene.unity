@@ -769,7 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3075ada03d6a342488e0c81c0153a2a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaximumHealth: 3
+  MaximumHealth: 5
   CurrentHealth: 0
   healthBar: {fileID: 836594105}
 --- !u!114 &496644971
@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8953567029d36543b4ff24485c52e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceThreshold: 50
+  distanceThreshold: 20
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2662,8 +2662,8 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1677903823}
   - {fileID: 993625436}
-  - {fileID: 1721867555}
   - {fileID: 519420032}
+  - {fileID: 1721867555}
   - {fileID: 496644967}
   - {fileID: 309698198}
   - {fileID: 1624509042}
