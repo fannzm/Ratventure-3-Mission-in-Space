@@ -12,6 +12,11 @@ public class EnemySpawner : MonoBehaviour
     public float spawnDistanceAhead = 5f; // Entfernung vor dem Spieler, bei der der Gegner spawnt
     public float difficultyScaling = 1.2f; // Skalierung der Gegner-Stärke (Gesundheit, Schaden)
 
+    public float SpawnRateMin = 1f; // Minimale Spawn-Rate
+    public float SpawnRateMax = 3f; // Maximale Spawn-Rate
+    public int MaxEnemies = 6; // Maximale Anzahl aktiver Meteoriten
+    private float _nextSpawnTime; // Nächste Spawnzeit
+
     // Begrenzung der Y-Position für die Gegner
     public float minY = -5f; // Untere Begrenzung
     public float maxY = 5f;  // Obere Begrenzung
@@ -21,7 +26,6 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform; // Finde den Player über Tag
         lastSpawnDistance = player.position.x; // Setze die Startposition des Spielers als Referenz
         StartCoroutine(SpawnEnemies());
     }
@@ -80,5 +84,11 @@ public class EnemySpawner : MonoBehaviour
 
         // Steigere die Welle für den nächsten Spawn
         waveLevel++;
+    }
+
+    private void DetermineNextSpawnTime()
+    {
+        // Prüfen, ob die maximale Anzahl aktiver Meteoriten erreicht ist
+        _nextSpawnTime = Time.time + UnityEngine.Random.Range(SpawnRateMin, SpawnRateMax);
     }
 }

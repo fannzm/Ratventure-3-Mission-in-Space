@@ -10,6 +10,9 @@ public class HeartAndPowerupSpawner : MonoBehaviour
     public float spawnHeightOffset = 1f;   // Zusätzlicher Offset über dem Spieler
     public GameObject Player;              // Referenz zum Spieler
 
+    public float minY = -5f; // Untere Begrenzung
+    public float maxY = 5f;  // Obere Begrenzung
+
     private void Start()
     {
         // Beginnt den Spawn-Mechanismus nach einem bestimmten Intervall

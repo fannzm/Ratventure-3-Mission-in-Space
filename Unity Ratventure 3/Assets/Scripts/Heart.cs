@@ -6,6 +6,7 @@ public class Heart : MonoBehaviour
 {
     public int healingAmount = 1; // Menge an Heilung, die das Herz gibt
 
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player")) // Prüft, ob der Spieler mit dem Herz kollidiert
