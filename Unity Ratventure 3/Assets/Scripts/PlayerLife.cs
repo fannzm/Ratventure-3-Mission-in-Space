@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class PlayerLife : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class PlayerLife : MonoBehaviour
     public int CurrentHealth;
     private float speed = 5f;
     private bool hasShield = false;
+    private float shieldDuration = 5f; // Dauer des Schilds
 
     public HealthBar healthBar;
     private bool isDead = false; // Um Mehrfach-Tod zu verhindern
@@ -36,10 +39,16 @@ public class PlayerLife : MonoBehaviour
     public void TakeDamage(int damage, string damageSource)
     {
         if (isDead) return; // Wenn bereits tot, keine weitere Aktion
-
+        if (hasShield)
+        {
+            Debug.Log("Shield ist aktiv, kein Schaden erhalten!");
+            return; // Spieler erleidet keinen Schaden
+        }
         CurrentHealth -= damage;
 
         Debug.Log($"Schaden genommen: {damage} | Quelle: {damageSource} | Aktuelle Gesundheit: {CurrentHealth}");
+
+      
 
         // Health Bar aktualisieren
         if (healthBar != null)
@@ -104,9 +113,24 @@ public class PlayerLife : MonoBehaviour
     }
 
     // Funktion für das Aktivieren des Schilds
+    // Diese Methode kannst du anpassen, um das Schild zu aktivieren
     public void ActivateShield()
     {
+        if (hasShield) return; // Wenn der Spieler bereits ein Schild hat, nichts tun
+
         hasShield = true;
-        Debug.Log("Shield activated!");
+        Debug.Log("Shield aktiviert!");
+
+        // Schild für eine gewisse Zeit aktivieren
+        StartCoroutine(ShieldDuration());
+    }
+
+    private IEnumerator ShieldDuration()
+    {
+        yield return new WaitForSeconds(shieldDuration);
+
+        // Nach der Dauer das Schild deaktivieren
+        hasShield = false;
+        Debug.Log("Shield deaktiviert.");
     }
 }

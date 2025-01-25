@@ -196,7 +196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heartPrefab: {fileID: 7318489021914006155, guid: 26f7fb5241074ae4997cd956b7235dcf, type: 3}
-  powerupPrefabs: []
+  powerupPrefabs:
+  - {fileID: 3815391054103685230, guid: 541b813f715577448aa2a4a1562787c9, type: 3}
   spawnInterval: 3
   spawnHeightOffset: 2
   Player: {fileID: 496644964}
