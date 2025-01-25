@@ -22,16 +22,10 @@ public class EnemyAttack : MonoBehaviour
 
     void Update()
     {
-        if (player != null)
+        float distanceX = 0;
+        if (distanceX <= attackRange && Time.time >= lastAttackTime + attackCooldown)
         {
-            // Berechne die Entfernung auf der x-Achse
-            float distanceX = Mathf.Abs(player.position.x - transform.position.x);
-
-            // Wenn der Spieler in Reichweite ist
-            if (distanceX <= attackRange && Time.time >= lastAttackTime + attackCooldown)
-            {
-                Attack();
-            }
+            Attack();
         }
     }
 

@@ -59,6 +59,6 @@ public class EnemyProjectiles : MonoBehaviour
     void Update()
     {
         // Optional: Projektil nach einer bestimmten Zeit zerstören
-        Destroy(gameObject, 5f); // Zerstöre das Projektil nach 5 Sekunden
+        Destroy(gameObject, 3f); // Zerstöre das Projektil nach 5 Sekunden
     }
 }

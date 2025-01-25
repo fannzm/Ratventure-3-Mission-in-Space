@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ParallaxController : MonoBehaviour
 {
-    Transform cam; //Main Camera
+    Transform cam; // Main Camera
     Vector3 camStartPos;
-    float distance;
+    Vector3 distance;
 
     GameObject[] backgrounds;
     Material[] mat;
@@ -39,7 +39,7 @@ public class ParallaxController : MonoBehaviour
 
     void BackSpeedCalculate(int backCount)
     {
-        for (int i = 0; i < backCount; i++) //find the farthest background
+        for (int i = 0; i < backCount; i++) // Find the farthest background
         {
             if ((backgrounds[i].transform.position.z - cam.position.z) > farthestBack)
             {
@@ -47,7 +47,7 @@ public class ParallaxController : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < backCount; i++) //set the speed of background
+        for (int i = 0; i < backCount; i++) // Set the speed of background
         {
             backSpeed[i] = 1 - (backgrounds[i].transform.position.z - cam.position.z) / farthestBack;
         }
@@ -55,15 +55,14 @@ public class ParallaxController : MonoBehaviour
 
     private void LateUpdate()
     {
-        distance = cam.position.x - camStartPos.x;
-        transform.position = new Vector3(cam.position.x, transform.position.y, 0);
+        distance = cam.position - camStartPos; // Calculate distance in both X and Y
+        transform.position = new Vector3(cam.position.x, cam.position.y, transform.position.z);
 
         for (int i = 0; i < backgrounds.Length; i++)
         {
-            float speed = backSpeed[i] * parallaxSpeed*5;
-            mat[i].SetTextureOffset("_MainTex", new Vector2(distance, 0) * speed);
+            float speed = backSpeed[i] * parallaxSpeed * 5;
+            Vector2 offset = new Vector2(distance.x, distance.y) * speed; // Include both X and Y offsets
+            mat[i].SetTextureOffset("_MainTex", offset);
         }
     }
-
-
 }

@@ -8,8 +8,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
 
     public float speed = 7f; // Bewegungsgeschwindigkeit des Spielers
-    public float minY = -5f; // Untere Begrenzung der Y-Achse
-    public float maxY = 5f;  // Obere Begrenzung der Y-Achse
     private float minX; // Minimaler X-Wert (Begrenzung für Rückwärtsbewegung)
 
     private Transform playerTransform;
@@ -31,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(dirX * speed, dirY * speed);
 
         // Spielerposition entlang der Y-Achse begrenzen
-        ClampPosition();
+
         // Vorwärtsbewegung (positiv) basierend auf Benutzereingabe
         float move = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
 
@@ -59,15 +57,6 @@ public class PlayerMovement : MonoBehaviour
     {
         minX = playerProgress; // Verschiebe die Grenze nach vorne, basierend auf dem Fortschritt
     }
-    private void ClampPosition()
-    {
-        // Begrenze die Y-Position des Spielers
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, minY, maxY);
 
-        // Setze die Position des Spielers zurück
-        transform.position = new Vector3(transform.position.x, clampedPosition.y, transform.position.z);
-    }
 
 }
-

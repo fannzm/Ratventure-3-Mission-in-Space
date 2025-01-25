@@ -238,8 +238,8 @@ MonoBehaviour:
   animator: {fileID: 7616055257105313533}
   projectilePrefab: {fileID: 1890829502903313945, guid: bd9955ceb34854ea88ada2040c324cc8, type: 3}
   firePoint: {fileID: 4965833719164713114}
-  attackCooldown: 1
-  projectileSpeed: 5
+  attackCooldown: 0
+  projectileSpeed: 16
   damage: 2
 --- !u!114 &3084578808400352589
 MonoBehaviour:
@@ -258,10 +258,11 @@ MonoBehaviour:
   - {fileID: 6475472897823715181, guid: 06944596d5cc945d5a67a404ba4e1a92, type: 3}
   player: {fileID: 6737137575568178520, guid: abf6e24fc2ea8430f810feaff00653ad, type: 3}
   spawnInterval: 50
-  spawnDistanceAhead: 7
   difficultyScaling: 0.9
-  minY: -5
-  maxY: 5
+  SpawnRateMin: 1
+  SpawnRateMax: 3
+  MaxEnemies: 6
+  spawnHeightOffset: 1
 --- !u!1 &4969861517617180170
 GameObject:
   m_ObjectHideFlags: 0
