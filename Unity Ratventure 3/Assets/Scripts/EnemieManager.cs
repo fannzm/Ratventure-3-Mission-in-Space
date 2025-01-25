@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemieManager : MonoBehaviour
 {
     private Animator anim;
-    public int Damage = 2;
+    public int Damage = 1;
 
     public int health = 5; // Lebenspunkte des Gegners
     public float lifetime = 15f; // Feste Zeit, nach der der Gegner automatisch zerstört wird
