@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     private void Start ()
     {
         score = 0;
+        score = PlayerPrefs.GetInt("Score_" + PlayerPrefs.GetString("PlayerName", "Unknown"), 0);
         UpdateScore(0);
     }
 
@@ -29,5 +30,32 @@ public class MainMenu : MonoBehaviour
     {
         score += scoreToAdd;
         scoreText.text = "Score: " + score;
+        SavePlayerScore(score);
+    }
+
+    // Speichere den Score, der als Parameter übergeben wird
+    public void SavePlayerScore(int score)
+    {
+        string playerName = PlayerPrefs.GetString("PlayerName", "Unknown");
+        PlayerPrefs.SetInt("Score_" + playerName, score); // Speichert den Score mit dem Spielernamen
+        PlayerPrefs.Save(); // Speichern
+        Debug.Log($"Score gespeichert: {score} für Spieler {playerName}"); // Debug-Ausgabe
+    }
+
+    public void RestartGame()
+    {
+        string playerName = PlayerPrefs.GetString("PlayerName", "Unknown");
+
+        // Setze den Score zurück und überschreibe den alten Wert, falls der Spielername bereits existiert
+        PlayerPrefs.SetInt("Score_" + playerName, 0); // Überschreibe den Score für diesen Spieler
+        PlayerPrefs.Save(); // Speichern
+        // Lädt die aktuelle Szene neu
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void GoToMainMenu()
+    {
+        // Die Main Menu Scene laden (ersetze "MainMenu" durch den Namen deiner Hauptmenüszene)
+        SceneManager.LoadScene("MainMenu");
     }
 }

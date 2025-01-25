@@ -25,16 +25,29 @@ public class PlayerNameInput : MonoBehaviour
         playButton.interactable = !string.IsNullOrEmpty(input);
     }
 
-    public void OnPlayButtonClicked()
+    void OnPlayButtonClicked()
     {
-        // Spielernamen speichern
         string playerName = playerNameInputField.text;
         PlayerPrefs.SetString("PlayerName", playerName);
-        Debug.Log(name);
 
-        // Spiel starten (z. B. neue Szene laden)
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);// Ersetze "GameScene" mit dem Namen deiner Spielszene
+        // Alle Spieler in einer Liste speichern
+        string allPlayers = PlayerPrefs.GetString("AllPlayers", "");
+        if (string.IsNullOrEmpty(allPlayers))
+        {
+            allPlayers = playerName; // Wenn keine Spieler vorhanden sind, setze den ersten Spieler
+        }
+        else
+        {
+            allPlayers += "," + playerName; // Füge den neuen Spielernamen hinzu
+        }
+
+        PlayerPrefs.SetString("AllPlayers", allPlayers);
+        PlayerPrefs.Save(); // Speichern
+
+        // Spiel starten
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-  
+
+
 
 }

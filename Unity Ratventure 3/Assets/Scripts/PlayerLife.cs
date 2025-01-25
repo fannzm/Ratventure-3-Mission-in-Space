@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
+    private PlayerScore playerScore; // Referenz auf das PlayerScore-Script
     private Animator anim;
 
     public int MaximumHealth = 5;
@@ -17,6 +18,13 @@ public class PlayerLife : MonoBehaviour
     {
         CurrentHealth = MaximumHealth;
         anim = GetComponent<Animator>();
+
+        // Hole das PlayerScore-Script
+        playerScore = FindObjectOfType<PlayerScore>(); // Sucht das PlayerScore-Script im Spiel
+        if (playerScore == null)
+        {
+            Debug.LogError("PlayerScore Script nicht gefunden!");
+        }
 
         // Health Bar initialisieren
         if (healthBar != null)
@@ -54,7 +62,6 @@ public class PlayerLife : MonoBehaviour
         Debug.Log("Spieler ist gestorben.");
 
         // Blockiere die Bewegungen des Spielers (Beispiel, falls du Bewegungslogik hast)
-        // Optional: Stelle sicher, dass alle Player-bezogenen Scripts hier gestoppt werden
         GetComponent<PlayerMovement>().enabled = false; // Falls du ein PlayerMovement-Skript hast, deaktiviere es
 
         // Tod-Animation (falls Animator vorhanden)
@@ -62,14 +69,10 @@ public class PlayerLife : MonoBehaviour
         {
             anim.SetTrigger("Death");
         }
-        SceneManager.LoadScene(2);
-        // Szene nach kurzer Verzögerung neu laden
-        //Invoke(nameof(ReloadScene), 0.5f); // 2 Sekunden Verzögerung
-    }
+       
 
-    private void ReloadScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Lade die Szene nach dem Tod des Spielers
+        SceneManager.LoadScene(2);
     }
 
     public void Heal(int amount)
@@ -97,7 +100,6 @@ public class PlayerLife : MonoBehaviour
     public void IncreaseSpeed(float multiplier)
     {
         speed *= multiplier;
-        // Hier kannst du auch visuelle oder andere Rückmeldungen geben, dass die Geschwindigkeit erhöht wurde
         Debug.Log("Speed increased!");
     }
 
@@ -105,12 +107,6 @@ public class PlayerLife : MonoBehaviour
     public void ActivateShield()
     {
         hasShield = true;
-        // Du kannst auch ein Schild-Sprite oder eine andere visuelle Rückmeldung anzeigen
         Debug.Log("Shield activated!");
     }
-
- 
 }
-
-
-
