@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-
 public class PlayerLife : MonoBehaviour
 {
     private PlayerScore playerScore; // Referenz auf das PlayerScore-Script
@@ -16,6 +15,8 @@ public class PlayerLife : MonoBehaviour
 
     public HealthBar healthBar;
     private bool isDead = false; // Um Mehrfach-Tod zu verhindern
+
+    private PlayerAttack playerAttack; // Referenz auf das PlayerAttack-Skript
 
     void Start()
     {
@@ -34,6 +35,13 @@ public class PlayerLife : MonoBehaviour
         {
             healthBar.SetMaxHealth(MaximumHealth);
         }
+
+        // Referenz auf PlayerAttack holen
+        playerAttack = GetComponent<PlayerAttack>();
+        if (playerAttack == null)
+        {
+            Debug.LogError("PlayerAttack Script nicht gefunden!");
+        }
     }
 
     public void TakeDamage(int damage, string damageSource)
@@ -47,8 +55,6 @@ public class PlayerLife : MonoBehaviour
         CurrentHealth -= damage;
 
         Debug.Log($"Schaden genommen: {damage} | Quelle: {damageSource} | Aktuelle Gesundheit: {CurrentHealth}");
-
-      
 
         // Health Bar aktualisieren
         if (healthBar != null)
@@ -70,7 +76,13 @@ public class PlayerLife : MonoBehaviour
         isDead = true; // Spieler ist jetzt tot
         Debug.Log("Spieler ist gestorben.");
 
-        // Blockiere die Bewegungen des Spielers (Beispiel, falls du Bewegungslogik hast)
+        // Setze isAlive im PlayerAttack-Skript auf false
+        if (playerAttack != null)
+        {
+            playerAttack.SetAliveState(false);
+        }
+
+        // Blockiere die Bewegungen des Spielers
         GetComponent<PlayerMovement>().enabled = false; // Falls du ein PlayerMovement-Skript hast, deaktiviere es
 
         // Tod-Animation (falls Animator vorhanden)
@@ -78,7 +90,6 @@ public class PlayerLife : MonoBehaviour
         {
             anim.SetTrigger("Death");
         }
-       
 
         // Lade die Szene nach dem Tod des Spielers
         SceneManager.LoadScene(2);
@@ -105,15 +116,12 @@ public class PlayerLife : MonoBehaviour
         Debug.Log($"Heilung erhalten: {amount} | Aktuelle Gesundheit: {CurrentHealth}");
     }
 
-    // Funktion zum Erhöhen der Geschwindigkeit
     public void IncreaseSpeed(float multiplier)
     {
         speed *= multiplier;
         Debug.Log("Speed increased!");
     }
 
-    // Funktion für das Aktivieren des Schilds
-    // Diese Methode kannst du anpassen, um das Schild zu aktivieren
     public void ActivateShield()
     {
         if (hasShield) return; // Wenn der Spieler bereits ein Schild hat, nichts tun

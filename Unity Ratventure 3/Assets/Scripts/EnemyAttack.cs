@@ -43,19 +43,21 @@ public class EnemyAttack : MonoBehaviour
             // Erstelle das Projektil und initialisiere es
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
 
-            // Initialisiere das Projektil mit dem Spieler als Ziel
+            // Initialisiere das Projektil mit der Position und Geschwindigkeit des Spielers
             EnemyProjectiles enemyProjectile = projectile.GetComponent<EnemyProjectiles>();
             if (enemyProjectile != null)
             {
-                // Zielposition ist die des Spielers, Geschwindigkeit und Schaden werden ebenfalls gesetzt
-                enemyProjectile.Initialize(player.position, projectileSpeed, damage);
+                Rigidbody2D playerRigidbody = player.GetComponent<Rigidbody2D>(); // Hole den Rigidbody des Spielers
+                Vector2 playerVelocity = playerRigidbody != null ? playerRigidbody.velocity : Vector2.zero;
+
+                // Zielposition ist die des Spielers, Geschwindigkeit und Schaden werden gesetzt
+                enemyProjectile.Initialize((Vector2)player.position, playerVelocity, projectileSpeed, damage);
             }
 
             if (enemyProjectile.projectileAnimator != null)
             {
                 enemyProjectile.projectileAnimator.SetTrigger("Shoot"); // Setzt den Trigger für die Projektil-Animation
             }
-
         }
 
         // Cooldown aktualisieren
