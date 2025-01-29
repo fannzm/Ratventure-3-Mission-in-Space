@@ -112,7 +112,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   damage: 3
   laserAnimator: {fileID: 6076802652326252967}
   laserDuration: 1
-  laserSpeed: 15
+  laserSpeed: 20
 --- !u!1 &2566126175769315348
 GameObject:
   m_ObjectHideFlags: 0
