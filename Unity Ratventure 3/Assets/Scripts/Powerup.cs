@@ -8,7 +8,8 @@ public class Powerup : MonoBehaviour
     {
         SpeedUp,
         Shield,
-        ExtraLife
+        ExtraLife,
+        Capsule
     }
 
     public PowerupType powerupType;
@@ -23,7 +24,7 @@ public class Powerup : MonoBehaviour
             {
                 case PowerupType.SpeedUp:
                     // Beispiel: Geschwindigkeit erhöhen
-                    playerController.IncreaseSpeed(2f); // Beispiel-Funktion
+                    playerController.ActivateSpeedUp();  // Aktiviert die Speed-Up Coroutine
                     break;
                 case PowerupType.Shield:
                     // Beispiel: Schild aktivieren
@@ -32,6 +33,9 @@ public class Powerup : MonoBehaviour
                 case PowerupType.ExtraLife:
                     // Beispiel: Extra Leben hinzufügen
                     playerController.Heal(1); // Macht das gleiche wie Heal, aber du könntest auch eine spezifische "Extra Life"-Methode erstellen
+                    break;
+                case PowerupType.Capsule:
+                    playerController.ItemPickup();
                     break;
             }
 

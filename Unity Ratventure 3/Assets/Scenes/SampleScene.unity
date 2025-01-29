@@ -199,6 +199,9 @@ MonoBehaviour:
   powerupPrefabs:
   - {fileID: 3815391054103685230, guid: 541b813f715577448aa2a4a1562787c9, type: 3}
   - {fileID: 8182768530920789421, guid: 535c9fd1c1440447e83c8557a7843996, type: 3}
+  - {fileID: 8182768530920789421, guid: ac63511fdd0061f4da8adb95742db6ab, type: 3}
+  - {fileID: 8182768530920789421, guid: 92732947a51af0549899bf7d0805b21d, type: 3}
+  - {fileID: 3815391054103685230, guid: 04213405998a8184ab4d7cc6b7370e9b, type: 3}
   spawnInterval: 3
   spawnHeightOffset: 2
   Player: {fileID: 496644964}
@@ -258,7 +261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -100, y: -115.6}
+  m_AnchoredPosition: {x: -222, y: -122}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &405627060
@@ -344,7 +347,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -334.21274, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

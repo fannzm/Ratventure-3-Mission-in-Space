@@ -1,23 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private PlayerLife playerLife; // Referenz auf das PlayerLife-Skript
 
-    public float speed = 7f; // Bewegungsgeschwindigkeit des Spielers
     private float minX; // Minimaler X-Wert (Begrenzung für Rückwärtsbewegung)
 
     private Transform playerTransform;
 
     private void Start()
     {
-
         rb = GetComponent<Rigidbody2D>();
         playerTransform = transform;
         minX = playerTransform.position.x; // Setze minX auf die Startposition des Spielers
+        playerLife = GetComponent<PlayerLife>(); // Hole das PlayerLife-Skript
     }
 
     private void Update()
@@ -26,12 +23,11 @@ public class PlayerMovement : MonoBehaviour
         float dirX = Input.GetAxis("Horizontal");
         float dirY = Input.GetAxis("Vertical");
 
-        rb.velocity = new Vector2(dirX * speed, dirY * speed);
-
-        // Spielerposition entlang der Y-Achse begrenzen
+        // Nutze die Geschwindigkeit aus dem PlayerLife-Skript
+        rb.velocity = new Vector2(dirX * playerLife.speed, dirY * playerLife.speed);
 
         // Vorwärtsbewegung (positiv) basierend auf Benutzereingabe
-        float move = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        float move = Input.GetAxis("Horizontal") * playerLife.speed * Time.deltaTime;
 
         // Berechne die neue Position des Spielers
         float newPosX = playerTransform.position.x + move;
@@ -52,11 +48,10 @@ public class PlayerMovement : MonoBehaviour
             UpdateMinX(newPosX);
         }
     }
+
     // Diese Methode verschiebt minX basierend auf dem Fortschritt des Spielers
     public void UpdateMinX(float playerProgress)
     {
         minX = playerProgress; // Verschiebe die Grenze nach vorne, basierend auf dem Fortschritt
     }
-
-
 }

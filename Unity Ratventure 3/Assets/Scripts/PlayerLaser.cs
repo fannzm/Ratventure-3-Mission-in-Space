@@ -60,5 +60,18 @@ public class PlayerLaser : MonoBehaviour
             // Optional: Laser deaktivieren, wenn er trifft
             Destroy(gameObject);
         }
+
+        // Überprüfen, ob das Objekt ein Gegner ist
+        if (collision.CompareTag("Projectiles"))
+        {
+            // Optional: Verhindern, dass das Projektil nach der Zerstörung weiter bewegt
+            Destroy(collision.gameObject); // Zerstört das Projektil, wenn es vom Laser getroffen wird
+
+            // Optional: Laser deaktivieren, wenn er trifft
+            Destroy(gameObject);
+        }
+
     }
+
+
 }

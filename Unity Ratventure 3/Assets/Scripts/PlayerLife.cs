@@ -9,7 +9,7 @@ public class PlayerLife : MonoBehaviour
 
     public int MaximumHealth = 5;
     public int CurrentHealth;
-    private float speed = 5f;
+    public float speed = 7f;
     private bool hasShield = false;
     private float shieldDuration = 5f; // Dauer des Schilds
 
@@ -17,6 +17,7 @@ public class PlayerLife : MonoBehaviour
     private bool isDead = false; // Um Mehrfach-Tod zu verhindern
 
     private PlayerAttack playerAttack; // Referenz auf das PlayerAttack-Skript
+    private float originalSpeed; // Ursprüngliche Geschwindigkeit
 
     void Start()
     {
@@ -42,6 +43,8 @@ public class PlayerLife : MonoBehaviour
         {
             Debug.LogError("PlayerAttack Script nicht gefunden!");
         }
+
+        originalSpeed = speed;
     }
 
     public void TakeDamage(int damage, string damageSource)
@@ -120,7 +123,14 @@ public class PlayerLife : MonoBehaviour
     {
         speed *= multiplier;
         Debug.Log("Speed increased!");
+       
     }
+
+    public void ActivateSpeedUp()
+    {
+        StartCoroutine(SpeedUpDuration());
+    }
+
 
     public void ActivateShield()
     {
@@ -133,6 +143,42 @@ public class PlayerLife : MonoBehaviour
         StartCoroutine(ShieldDuration());
     }
 
+    public void ItemPickup()
+    {
+        if (playerScore != null)
+        {
+            playerScore.currentScore += 50; // Erhöhe den Score um 10 Punkte
+            if (playerScore.mainMenu != null)
+            {
+                playerScore.mainMenu.UpdateScore(playerScore.currentScore); // Aktualisiere den Score im MainMenu
+            }
+
+            Debug.Log("Capsule eingesammelt! Score erhöht um 50 Punkte.");
+        }
+        else
+        {
+            Debug.LogError("PlayerScore-Skript nicht gefunden! Score kann nicht erhöht werden.");
+        }
+    }
+
+    public void EnemieManager()
+    {
+        if (playerScore != null)
+        {
+            playerScore.currentScore += 200; // Erhöhe den Score um 10 Punkte
+            if (playerScore.mainMenu != null)
+            {
+                playerScore.mainMenu.UpdateScore(playerScore.currentScore); // Aktualisiere den Score im MainMenu
+            }
+
+            Debug.Log("Enenemy getötet! Score erhöht um 200 Punkte.");
+        }
+        else
+        {
+            Debug.LogError("PlayerScore-Skript nicht gefunden! Score kann nicht erhöht werden.");
+        }
+    }
+
     private IEnumerator ShieldDuration()
     {
         yield return new WaitForSeconds(shieldDuration);
@@ -140,5 +186,15 @@ public class PlayerLife : MonoBehaviour
         // Nach der Dauer das Schild deaktivieren
         hasShield = false;
         Debug.Log("Shield deaktiviert.");
+    }
+
+    private IEnumerator SpeedUpDuration()
+    {
+        IncreaseSpeed(2f);  // Verdopple die Geschwindigkeit
+
+        yield return new WaitForSeconds(3f);  // Warten für 3 Sekunden
+
+        speed = originalSpeed;  // Stelle die ursprüngliche Geschwindigkeit wieder her
+        Debug.Log("Speed is back to normal.");
     }
 }

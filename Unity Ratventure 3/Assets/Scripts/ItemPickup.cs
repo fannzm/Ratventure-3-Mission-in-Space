@@ -2,19 +2,23 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public int scoreValue = 10; // Punkte, die das Item gibt
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player")) // Prüft, ob der Player das Item berührt
         {
-            PlayerScore playerScore = other.GetComponent<PlayerScore>(); // Referenz auf PlayerScore holen
-            if (playerScore != null)
+            // Rufe die ItemPickup-Methode in PlayerLife auf
+            PlayerLife playerLife = other.GetComponent<PlayerLife>();
+            if (playerLife != null)
             {
-                playerScore.currentScore += scoreValue; // Punkte hinzufügen
+                playerLife.ItemPickup(); // Triggert die Methode in PlayerLife
+            }
+            else
+            {
+                Debug.LogError("PlayerLife-Skript nicht gefunden!");
             }
 
-            Destroy(gameObject); // Item entfernen
+            // Zerstöre das eingesammelte Item
+            Destroy(gameObject);
         }
     }
 }

@@ -72,7 +72,7 @@ public class EnemyProjectiles : MonoBehaviour
             }
         }
 
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 1f);
     }
 
 
