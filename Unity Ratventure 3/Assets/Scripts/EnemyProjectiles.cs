@@ -12,6 +12,18 @@ public class EnemyProjectiles : MonoBehaviour
 
     public Animator projectileAnimator; // Animator für das Projektil, um seine Animation zu steuern
 
+    private DifficultyManager difficultyManager;
+
+    private void OnEnable()
+    {
+        DifficultyManager.OnDifficultyChanged += ApplyDifficultySettings;
+    }
+
+    private void OnDisable()
+    {
+        DifficultyManager.OnDifficultyChanged -= ApplyDifficultySettings;
+    }
+
     public void Initialize(UnityEngine.Vector2 playerPosition, UnityEngine.Vector2 playerVelocity, float projectileSpeed, int damage)
     {
         // Position des Projektils
@@ -30,6 +42,8 @@ public class EnemyProjectiles : MonoBehaviour
 
     void Start()
     {
+        difficultyManager = FindObjectOfType<DifficultyManager>();
+
         rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -39,6 +53,31 @@ public class EnemyProjectiles : MonoBehaviour
         if (projectileAnimator != null)
         {
             projectileAnimator.SetTrigger("Shoot"); // Animation starten
+        }
+
+        ApplyDifficultySettings(difficultyManager.GetCurrentDifficulty());
+    }
+
+    private void ApplyDifficultySettings(DifficultyManager.Difficulty difficulty)
+    {
+        if (difficultyManager == null) return;
+
+        switch (difficulty)
+        {
+            case DifficultyManager.Difficulty.Easy:
+                speed *= difficultyManager.projectileSpeedMultiplierEasy;
+                damage = Mathf.CeilToInt(damage * difficultyManager.enemyDamageMultiplierEasy);
+                break;
+
+            case DifficultyManager.Difficulty.Normal:
+                speed *= difficultyManager.projectileSpeedMultiplierNormal;
+                damage = Mathf.CeilToInt(damage * difficultyManager.enemyDamageMultiplierNormal);
+                break;
+
+            case DifficultyManager.Difficulty.Hard:
+                speed *= difficultyManager.projectileSpeedMultiplierHard;
+                damage = Mathf.CeilToInt(damage * difficultyManager.enemyDamageMultiplierHard);
+                break;
         }
     }
 
@@ -74,6 +113,7 @@ public class EnemyProjectiles : MonoBehaviour
 
         Destroy(gameObject, 1f);
     }
+
 
 
 }

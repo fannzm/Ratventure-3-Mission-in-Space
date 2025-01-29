@@ -4,11 +4,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static DifficultyManager;
 
 public class PlayerNameInput : MonoBehaviour
 {
     public TMP_InputField playerNameInputField; // Das InputField für den Spielernamen
     public Button playButton; // Der Play-Button
+    public DifficultyManager difficultyManager;
 
     private void Start()
     {
@@ -25,7 +27,7 @@ public class PlayerNameInput : MonoBehaviour
         playButton.interactable = !string.IsNullOrEmpty(input);
     }
 
-    void OnPlayButtonClicked()
+   public void OnPlayButtonClicked()
     {
         string playerName = playerNameInputField.text;
         PlayerPrefs.SetString("PlayerName", playerName);
@@ -42,7 +44,20 @@ public class PlayerNameInput : MonoBehaviour
         }
 
         PlayerPrefs.SetString("AllPlayers", allPlayers);
+
+        // Speichere die aktuelle Schwierigkeit
+        if (difficultyManager != null)
+        {
+            PlayerPrefs.SetInt("Difficulty", (int)difficultyManager.currentDifficulty);
+        }
+        else
+        {
+            Debug.LogWarning("DifficultyManager ist nicht zugewiesen. Schwierigkeit bleibt auf Standard.");
+            PlayerPrefs.SetInt("Difficulty", (int)Difficulty.Normal);
+        }
+
         PlayerPrefs.Save(); // Speichern
+
 
         // Spiel starten
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

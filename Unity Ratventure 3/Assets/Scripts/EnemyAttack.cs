@@ -15,10 +15,17 @@ public class EnemyAttack : MonoBehaviour
 
     private float lastAttackTime = 0f;
 
+
+
+
     void Start()
     {
+       
         player = GameObject.FindGameObjectWithTag("Player").transform; // Finde den Player über Tag
+
+       
     }
+
 
     void Update()
     {

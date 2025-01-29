@@ -9,8 +9,8 @@ public class MeteoriteSpawner : MonoBehaviour
     public Transform player; // Referenz zum Spieler
     public GameObject[] MeteoritePrefabs; // Array von Meteoriten-Prefabs
 
-    public float SpawnRateMin = 0.5f; // Minimale Spawn-Rate
-    public float SpawnRateMax = 3f; // Maximale Spawn-Rate
+    public float SpawnRateMin = 3f; // Minimale Spawn-Rate
+    public float SpawnRateMax = 6f; // Maximale Spawn-Rate
     public int MaxMeteorites = 15; // Maximale Anzahl aktiver Meteoriten
 
     public float MeteoriteSpeedMin = 3f; // Minimale Geschwindigkeit der Meteoriten
@@ -26,8 +26,13 @@ public class MeteoriteSpawner : MonoBehaviour
     private int activeMeteorites = 0; // Aktuelle Anzahl aktiver Meteoriten
     public int Damage = 1;
 
+
+
     private void Start()
     {
+
+
+
         if (Camera == null)
         {
             Camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -38,8 +43,10 @@ public class MeteoriteSpawner : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
+
         DetermineNextSpawnTime();
     }
+
 
     private void UpdateDifficulty()
     {
@@ -65,6 +72,7 @@ public class MeteoriteSpawner : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
         UpdateDifficulty();
+
 
         // Nur spawn, wenn weniger Meteoriten als die Maximalzahl existieren
         if (Time.time >= _nextSpawnTime && activeMeteorites < MaxMeteorites)

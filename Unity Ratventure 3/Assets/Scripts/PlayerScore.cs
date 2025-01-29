@@ -41,10 +41,7 @@ public class PlayerScore : MonoBehaviour
         }
     }
 
-   
-
-
-
+  
 
 
 
