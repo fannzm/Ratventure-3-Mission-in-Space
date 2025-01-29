@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9c593835c693a4aa5b190a1eecc090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
+  Damage: 3
   health: 5
   lifetime: 15
 --- !u!114 &-6553256777589471360
@@ -243,7 +243,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 3229696868424975597, guid: afdda8eca3de94fd4a9db1ff3fa173e6, type: 3}
   firePoint: {fileID: 6483088009164823814}
   attackCooldown: 0
-  projectileSpeed: 5
+  projectileSpeed: 12
   damage: 2
 --- !u!114 &5998780068229218089
 MonoBehaviour:

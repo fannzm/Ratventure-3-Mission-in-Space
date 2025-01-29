@@ -198,6 +198,7 @@ MonoBehaviour:
   heartPrefab: {fileID: 7318489021914006155, guid: 26f7fb5241074ae4997cd956b7235dcf, type: 3}
   powerupPrefabs:
   - {fileID: 3815391054103685230, guid: 541b813f715577448aa2a4a1562787c9, type: 3}
+  - {fileID: 8182768530920789421, guid: 535c9fd1c1440447e83c8557a7843996, type: 3}
   spawnInterval: 3
   spawnHeightOffset: 2
   Player: {fileID: 496644964}
@@ -1785,10 +1786,6 @@ PrefabInstance:
     - target: {fileID: 6737137575568178520, guid: abf6e24fc2ea8430f810feaff00653ad, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8953972974627146775, guid: abf6e24fc2ea8430f810feaff00653ad, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.73
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

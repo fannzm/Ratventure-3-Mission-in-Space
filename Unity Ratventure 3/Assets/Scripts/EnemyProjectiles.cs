@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class EnemyProjectiles : MonoBehaviour
@@ -60,6 +61,19 @@ public class EnemyProjectiles : MonoBehaviour
 
     void Update()
     {
-        Destroy(gameObject, 3f); // Zerstöre das Projektil nach 3 Sekunden
+        if (rb != null)
+        {
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+            if (player != null)
+            {
+                UnityEngine.Vector2 targetDirection = ((UnityEngine.Vector2)player.position - (UnityEngine.Vector2)transform.position).normalized;
+                direction = UnityEngine.Vector2.Lerp(direction, targetDirection, Time.deltaTime * 2);
+                rb.velocity = direction * speed;
+            }
+        }
+
+        Destroy(gameObject, 2f);
     }
+
+
 }
